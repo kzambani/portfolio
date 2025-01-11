@@ -9,10 +9,25 @@
     <h1>Contact Information</h1>
     <nav class="menu">
         <a href="../index.html">Home</a>
-        <a href="../projects/">Projects</a>
+        <a href="../projects/index.html">Projects</a>
         <a href="index.html">Contact</a>
         <a href="https://github.com/kzambani" target="_blank">GitHub</a>
+        <a href="../resume/index.html">Resume</a>
     </nav>
-    <form action="mailto:kzambani@ucsd.edu" method="POST" enctype="text/plain"> 
+    <form action="mailto:kzambani@ucsd.edu" method="POST" enctype="text/plain">
+        <label>
+            Email
+            <input type="email" name="email" required>
+        </label>
+        <label>
+            Subject:
+            <input name="subject" required>
+        </label>
+        <label>
+            Message:
+            <textarea name="body" required></textarea>
+        </label>
+        <button>Submit</button>
+    </form>
 </body>
 </html>
