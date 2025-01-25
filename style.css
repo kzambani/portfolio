@@ -1,7 +1,6 @@
+/* LAB 2 */
+
 body {
-    /* Set line height to 1.5 times the font size
-         and use the OS’s UI font as the website font
-       */
     font: 100%/1.5 system-ui;
     max-width: 100ch;
     margin-inline: max(1em, (100% - 100ch) / 2);
@@ -127,4 +126,42 @@ body.resume a[href^="mailto:"] {
 
 body.resume a[href^="mailto:"]:hover {
   color: #060403;
+}
+
+/* DARK-LIGHT MODE */
+
+/* enable light/dark mode adaptation */
+html {
+  color-scheme: light dark;
+}
+
+/* border contrast for dark mode */
+nav {
+  --border-color: oklch(50% 10% 200 / 40%);
+  border-bottom-color: var(--border-color);
+}
+
+/* hover background color */
+a:hover {
+  background-color: color-mix(in oklch, var(--color-accent), canvas 85%);
+}
+
+/* switch buttons style */
+.prefers-color-scheme {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  font-size: 80%;
+  z-index: 10;
+}
+
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: #121212;
+    color: #e0e0e0;
+  }
+
+  nav {
+    border-bottom-color: oklch(50% 10% 200 / 40%);
+  }
 }
