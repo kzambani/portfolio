@@ -165,3 +165,30 @@ a:hover {
     border-bottom-color: oklch(50% 10% 200 / 40%);
   }
 }
+
+
+/* GITHUB STATS STYLING */
+
+#profile-stats {
+  max-width: 400px;
+  padding: 16px;
+  background: #f8f9fa;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  text-align: center;
+}
+
+#profile-stats dl {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+#profile-stats dt {
+  font-weight: bold;
+}
+
+#profile-stats dd {
+  margin: 0;
+}
+

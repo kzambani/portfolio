@@ -5,89 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Projects</title>
     <link rel="stylesheet" href="../style.css">
-    <script src="../global.js" defer></script>
-
-    <!-- Dynamically set base URL -->
-    <script>
-        console.log("hostname: ", window.location.hostname);
-        // Set base URL dynamically based on hostname
-        if (
-            window.location.hostname === "127.0.0.1" ||
-            window.location.hostname === "localhost"
-        ) {
-            document.write('<base href="/">'); // Development environment
-        } else {
-            document.write('<base href="/portfolio/">'); // Production environment
-        }
-
-        const baseElement = document.querySelector("base");
-        console.log("Base URL:", baseElement.href);
-    </script>
 </head>
 <body>
-    <h1>My Projects</h1>
-    
-    <div class="projects">
-        <article>
-            <h2>Lorem ipsum dolor sit.</h2>
-            <img src="https://vis-society.github.io/labs/2/images/empty.svg" alt="">
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas accusamus enim minima, consectetur eos odit, nulla inventore perferendis nam commodi, labore voluptas doloribus sequi ducimus. Eveniet obcaecati rem aspernatur quia.</p>
-        </article>
-        <article>
-            <h2>Quibusdam velit aut culpa.</h2>
-            <img src="https://vis-society.github.io/labs/2/images/empty.svg" alt="">
-            <p>Inventore quaerat repudiandae eum saepe, cumque voluptatum. Commodi perspiciatis quas sapiente itaque nisi repellendus nobis aliquam veritatis odio ipsam enim asperiores modi tempora, nam provident, accusamus amet. Architecto, molestias nobis!</p>
-        </article>
-        <article>
-            <h2>Officiis eligendi nemo quo?</h2>
-            <img src="https://vis-society.github.io/labs/2/images/empty.svg" alt="">
-            <p>Molestias perspiciatis ex, quasi minus rerum deleniti aperiam omnis, ullam officia neque repudiandae mollitia provident vitae aliquid. Inventore, tenetur quisquam? Sed ab pariatur sint atque harum voluptatum commodi architecto nam!</p>
-        </article>
-        <article>
-            <h2>Id illo minima amet?</h2>
-            <img src="https://vis-society.github.io/labs/2/images/empty.svg" alt="">
-            <p>Molestiae laudantium quis numquam. Facere corrupti eius quam, tempora aperiam earum ipsum vel dignissimos quia ea iusto vero explicabo. Dolor neque voluptate dolorum itaque. Illo explicabo quisquam vero quibusdam sed!</p>
-        </article>
-        <article>
-            <h2>Unde id modi aliquam.</h2>
-            <img src="https://vis-society.github.io/labs/2/images/empty.svg" alt="">
-            <p>Ducimus, tempora. Nostrum voluptatibus magni, consectetur voluptatum commodi doloribus doloremque suscipit ea voluptas quasi natus iste qui asperiores odio, veritatis reiciendis mollitia eaque corrupti harum possimus. Reiciendis sit ratione cupiditate!</p>
-        </article>
-        <article>
-            <h2>Alias dolor suscipit aut.</h2>
-            <img src="https://vis-society.github.io/labs/2/images/empty.svg" alt="">
-            <p>Consequuntur molestias laudantium provident consectetur optio dolorum, accusamus, cum voluptatem explicabo pariatur labore, obcaecati neque. Maiores, odio iusto est vel, asperiores veniam at similique officiis quidem numquam dolorum quas! Nisi?</p>
-        </article>
-        <article>
-            <h2>Omnis obcaecati odit veritatis?</h2>
-            <img src="https://vis-society.github.io/labs/2/images/empty.svg" alt="">
-            <p>Et corporis nihil alias nemo non deserunt quidem minima est temporibus. Laborum, unde nesciunt? Ex vitae amet facilis sequi rerum tempore possimus nobis expedita veniam. Accusamus laborum pariatur incidunt architecto.</p>
-        </article>
-        <article>
-            <h2>Natus, maxime ut. Vel.</h2>
-            <img src="https://vis-society.github.io/labs/2/images/empty.svg" alt="">
-            <p>Veniam, eos magni voluptas amet quibusdam eius, voluptate ullam recusandae nihil atque quae, quo ab accusamus culpa consequuntur fugiat. Similique odit officiis sequi, ullam voluptatibus sapiente exercitationem quasi velit fuga!</p>
-        </article>
-        <article>
-            <h2>Quam totam fugiat pariatur.</h2>
-            <img src="https://vis-society.github.io/labs/2/images/empty.svg" alt="">
-            <p>Eaque expedita et doloremque aperiam. Quam incidunt deleniti mollitia expedita. Numquam nesciunt error architecto? Tempora repellat aliquam neque recusandae pariatur nulla repudiandae ab voluptatibus ea, culpa, incidunt delectus fugit at!</p>
-        </article>
-        <article>
-            <h2>Molestiae natus molestias maxime.</h2>
-            <img src="https://vis-society.github.io/labs/2/images/empty.svg" alt="">
-            <p>Ea error distinctio vel eos cupiditate rerum illum quisquam quae id. Commodi ad dolore, vero at quidem corporis quod sequi eius sint nam deserunt iusto veritatis autem modi! Eaque, rerum.</p>
-        </article>
-        <article>
-            <h2>Expedita quasi placeat quam!</h2>
-            <img src="https://vis-society.github.io/labs/2/images/empty.svg" alt="">
-            <p>Saepe vitae error ullam illum alias eaque doloribus debitis, laboriosam labore veritatis doloremque dolorem provident quas soluta corrupti placeat repudiandae modi veniam eius. Fuga omnis sit labore perspiciatis laudantium aut?</p>
-        </article>
-        <article>
-            <h2>Eveniet, non voluptatum? Ratione.</h2>
-            <img src="https://vis-society.github.io/labs/2/images/empty.svg" alt="">
-            <p>Aliquid quasi tenetur recusandae dolor voluptatibus, accusantium, facere nemo laboriosam temporibus eligendi adipisci eos voluptatem sed dicta cum fugiat atque vero possimus, voluptates enim necessitatibus nisi? Nobis, inventore? Officia, sapiente?</p>
-        </article>
-    </div>
+    <h1 class="projects-title">Projects</h1>
+    <div class="projects"></div>
+    <script src="../global.js" type="module"></script>
+    <script src="projects.js" type="module"></script>
 </body>
 </html>
