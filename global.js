@@ -100,7 +100,7 @@ document.addEventListener('DOMContentLoaded', function () {
   const form = document.querySelector('form');
   
   form?.addEventListener('submit', function (event) {
-    event.preventDefault();  // Stop default form submission
+    event.preventDefault();  // stop default form submission
 
     const formData = new FormData(form);
     let queryString = '';
@@ -112,7 +112,7 @@ document.addEventListener('DOMContentLoaded', function () {
       queryString += `${encodeURIComponent(name)}=${encodeURIComponent(value)}`;
     }
 
-    // Construct the mailto link with properly encoded values
+    // construct the mailto link with encoded values
     const mailtoLink = `${form.action}?${queryString}`;
     window.location.href = mailtoLink;
   });
@@ -122,7 +122,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 export async function fetchJSON(url) {
   try {
-      // Fetch the JSON file from the given URL
+      // fetch the JSON file from the given URL
       const response = await fetch(url);
       console.log(response);
       
@@ -142,7 +142,7 @@ export function renderProjects(projects, containerElement, headingLevel = 'h2') 
   // not DOM element
   if (!containerElement || !(containerElement instanceof Element)) {
     console.error('Invalid container element:', containerElement);
-    return; // Stop the function if container is invalid
+    return; // stop the function if container is invalid
     }
   // validate headings
   const validHeadings = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'];
@@ -150,6 +150,8 @@ export function renderProjects(projects, containerElement, headingLevel = 'h2') 
       console.warn(`Invalid heading level "${headingLevel}". Defaulting to "h2".`);
       headingLevel = 'h2';
     }
+
+  containerElement.innerHTML = '';
   
   // create element for each project
   projects.forEach(project => {
@@ -157,7 +159,7 @@ export function renderProjects(projects, containerElement, headingLevel = 'h2') 
     article.innerHTML = `
         <${headingLevel}>${project.title}</${headingLevel}>
         <img src="${project.image}" alt="${project.title}">
-        <p>${project.description}</p>
+        <p>${project.description} (${project.year})</p>
     `;
     containerElement.appendChild(article);
   });

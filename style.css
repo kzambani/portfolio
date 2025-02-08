@@ -192,3 +192,100 @@ a:hover {
   margin: 0;
 }
 
+#projects-plot {
+  max-width: 20em;
+  margin-block: 2em;
+
+  overflow: visible;
+}
+
+/* Pie Chart and Legend Styling */
+#projects-plot {
+  max-width: 20em;
+  margin-block: 2em;
+
+  overflow: visible;
+}
+
+.container {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  gap: 50px;
+  margin-top: 20px;
+}
+
+.legend {
+  list-style: none;
+  border: 1px solid rgb(198, 188, 188);
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+}
+
+.legend li {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.legend .swatch {
+  width: 10px;
+  height: 10px;
+  display: inline-block;
+  background-color: var(--color);
+  border-radius: 50%;
+}
+
+&:has(path:hover) {
+  path:not(:hover) {
+    opacity: 0.5;
+  }
+}
+
+path {
+  transition: 300ms;
+}
+
+.selected {
+  --color: oklch(37.23% 0.0123 351.53) !important;
+
+  &:is(path) {
+    fill: var(--color);
+  }
+}
+
+path {
+  cursor: pointer;
+}
+
+/* Search Container */
+.search-container {
+  margin: 3rem 0;
+  display: flex;
+  gap: 0.5rem;
+  max-width: 400px;
+}
+
+/* Search Input */
+.searchBar {
+  flex: 1;
+  padding: 0.75rem 1rem;
+  border: 2px solid #e2e8f0;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  transition: all 0.2s ease-in-out;
+  outline: none;
+  background-color: white;
+}
+
+.searchBar:focus {
+  border-color: #4f46e5;
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+}
+
+.searchBar:hover {
+  border-color: #cbd5e1;
+}
