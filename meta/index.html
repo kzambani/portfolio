@@ -1,14 +1,45 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Meta</title>
     <link rel="stylesheet" href="../style.css">
-    <script src="../global.js" type="module" defer></script>
+    <script src="https://d3js.org/d3.v7.min.js"></script>    
+    <script src="main.js" type="module" defer></script>
+    <title>Meta</title>
 </head>
 <body>
-    <h1>Meta</h1>
-    <p>This page includes stats about the code of this website.</p>
+    <h1>Meta </h1>
+    <p>This page contains stats about the code in this website.</p>
+
+    <div id="stats"></div>
+    <hr>
+
+    <h2>&#9824; Commits by time of day</h2>
+    <br>
+    <div id="chart"></div>
+
+    <dl id="commit-tooltip" class="info tooltip">
+        <dt>Commit</dt>
+        <dd>
+          <a href="" id="commit-link" target="_blank"></a>
+        </dd>
+      
+        <dt>Date</dt>
+        <dd id="commit-date"></dd>
+      
+        <!-- Add: Time, author, lines edited -->
+        <dt>Time</dt>
+        <dd id="commit-time"></dd>
+      
+        <dt>Author</dt>
+        <dd id="commit-author"></dd>
+      
+        <dt>Lines Edited</dt>
+        <dd id="commit-lines-edited"></dd>
+      </dl>
+    
+      <p id="selection-count">&#9824; No commits selected</p>
+      <dl id="language-breakdown" class="stats"></dl>
+    <script src="../global.js" type="module" defer></script>
 </body>
 </html>

@@ -1,47 +1,83 @@
-/* LAB 2 */
+:root {
+  --color-accent: #8638e4; 
+  --font-family: system-ui, sans-serif;
+}
+
+html {
+  color-scheme: dark;
+}
 
 body {
+    /* Set line height to 1.5 times the font size
+         and use the OS’s UI font as the website font
+       */
     font: 100%/1.5 system-ui;
     max-width: 100ch;
-    margin-inline: max(1em, (100% - 100ch) / 2);
+    margin-inline: auto;
+    padding: 25px;
+    accent-color: var(--color-accent);
+    font-family: var(--font-family);
   }
 
-nav ul, nav li {
-    display: contents; 
-}
-
-nav {
-  display: flex;
-  margin-bottom: 1em;
-  border-bottom: 1px solid oklch(80% 3% 200);
-}
-
-nav a {
-  flex: 1;
-  text-decoration: none;
-  color: inherit;
+.menu {
   text-align: center;
-  padding: 0.5em;
+  justify-content: center;
 }
 
-nav a.current {
-  border-bottom: 0.4em solid oklch(80% 3% 200);
+.ul {
+  padding: 0;
+  margin: 0;
+  display: flex;
+  list-style: none;
+  text-align: center;
+  justify-content: center
+}
+
+
+.menu a {
+  text-decoration: none;
+  display: flex;
+  padding: 0.5em 2em;
+  margin: 0;
+}
+
+.menu a:hover {
+  background-color: color-mix(in oklch, var(--color-accent), canvas 70%);
+  border-bottom: 0.4em solid var(--color-accent); 
+  padding-bottom: 0.5em;
+}
+
+.current {
+  border-bottom: 0.4em solid var(--border-color);
   padding-bottom: 0.1em;
 }
 
-:root {
-  --color-accent: oklch(0% 0 288);
+nav {
+  --border-color: oklch(50% 10% 200 / 40%);
+  display: flex;
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+  border-bottom-color: var(--border-color);
+  text-align: center;
 }
 
-nav a:hover {
-  border-bottom: 0.4em solid var(--color-accent);
-  background-color: oklch(95% 5% from var(--color-accent));
+a {
+  text-decoration: none;
+  color: inherit;
 }
 
-form input,
-form textarea,
-form button {
-  font: inherit;
+select{
+  font-size: 60%;
+}
+
+.color-scheme {
+  position: absolute;
+  top: 1rem; /* Adjust the distance from the top */
+  right: 1rem; /* Adjust the distance from the right */
+}
+
+input, textarea, button, select {
+  font: inherit;  
 }
 
 form {
@@ -50,193 +86,156 @@ form {
   gap: 1em;
 }
 
-form label {
-  display: grid; 
-  grid-template-columns: subgrid; 
+button {
+  text-align: center;
+  justify-content: center;
+  margin: 0;
+  align-items: center;
+  cursor: pointer;
+  display: inline-flex;
+}
+
+button:hover {
+  background-color: var(--color-accent); /* Change background color on hover */
+}
+
+label, button {
+  display: grid;
+  grid-template-columns: subgrid;
   grid-column: 1 / -1;
 }
 
 .projects {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(15em, 1fr));
-}
-
-.projects article {
-  display: grid;
   grid-template-rows: subgrid;
-  grid-row: span 3;
-  gap: 0.5em;
+  gap: 1rem;
 }
 
-.projects article h2 {
-  margin: 0;
+article{
+  grid-template-rows: subgrid;
+  display: grid;
+  grid-row: span 3;
+  gap: 1em;
 }
 
 h1 {
-  font-size: 400%; 
-  margin-bottom: 1em; 
-}
-
-h1, h2, h3, h4, h5, h6 {
-  line-height: 1.1; 
-  text-wrap: balance; 
-}
-
-body {
-  font-family: 'Arial', sans-serif;
-  line-height: 1.6;
-  background-color: #f4f4f4;
-  color: #333;
-  padding: 2em 5%;
-}
-
-body.resume {
-  background-color: #ffffff; 
-}
-
-body.resume header {
-  text-align: center;
-  background-color: #776983;
-  color: #fff;
-  padding: 2em 0;
-  border-radius: 0.5em;
-  margin-bottom: 2em;
-}
-
-body.resume header h1 {
-  font-size: 3em; 
+  font-size: 250%;
   margin-bottom: 0.5em;
 }
 
-body.resume section {
-  margin-bottom: 3em;
-}
-
-body.resume section h2 {
-  font-size: 2.2em;
-  margin-bottom: 1em;
-  color: #cda9dc;
-  border-bottom: 2px solid #030403;
-  padding-bottom: 0.5em;
-}
-
-body.resume a[href^="mailto:"] {
-  color: #cda9dc; 
-}
-
-body.resume a[href^="mailto:"]:hover {
-  color: #060403;
-}
-
-/* DARK-LIGHT MODE */
-
-/* enable light/dark mode adaptation */
-html {
-  color-scheme: light dark;
-}
-
-/* border contrast for dark mode */
-nav {
-  --border-color: oklch(50% 10% 200 / 40%);
-  border-bottom-color: var(--border-color);
-}
-
-/* hover background color */
-a:hover {
-  background-color: color-mix(in oklch, var(--color-accent), canvas 85%);
-}
-
-/* switch buttons style */
-.prefers-color-scheme {
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
-  font-size: 80%;
-  z-index: 10;
-}
-
-@media (prefers-color-scheme: dark) {
-  body {
-    background-color: #121212;
-    color: #e0e0e0;
-  }
-
-  nav {
-    border-bottom-color: oklch(50% 10% 200 / 40%);
-  }
-}
-
-
-/* GITHUB STATS STYLING */
-
-#profile-stats {
-  max-width: 400px;
-  padding: 16px;
-  background: #f8f9fa;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  text-align: center;
-}
-
-#profile-stats dl {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 8px;
-}
-
-#profile-stats dt {
-  font-weight: bold;
-}
-
-#profile-stats dd {
+h2 {
+  font-size: 150%;
   margin: 0;
 }
 
-#projects-plot {
-  max-width: 20em;
-  margin-block: 2em;
-
-  overflow: visible;
+h3 {
+  padding-top: 5px;
+  margin: 0;
 }
 
-/* Pie Chart and Legend Styling */
-#projects-plot {
+h1, h2, h3, h4, h5, h6{
+  line-height: 1.1;
+  text-wrap: balance;
+}
+
+time{
+  font-weight: bold;
+  margin: 0;
+  padding-bottom: 0;
+}
+
+ul{
+  margin: 0;
+  padding-bottom: 5px;
+}
+
+p {
+  padding-bottom: 5px;
+}
+
+img {
+  width: 100%;    /* Make image width responsive to the container */
+  height: auto;   /* Maintain aspect ratio */
+  max-width: 100%; /* Prevent image from growing larger than its container */
+}
+
+.logo {
+  width: 100%;    /* Make image width responsive to the container */
+  height: auto;   /* Maintain aspect ratio */
+  max-width: 100%; /* Prevent image from growing larger than its container */
+}
+
+dl {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* Create 4 equal-sized columns */
+  gap: 10px; /* Optional: Adds space between grid items */
+}
+
+/* Place <dt> (terms) on the first row */
+dt {
+  grid-row: 1;
+  font-weight: bold; /* Optional: make <dt> bold */
+}
+
+/* Place <dd> (descriptions) on the second row */
+dd {
+  grid-row: 2;
+  margin: 0; /* Optional: removes default margin for <dd> */
+}
+
+/* working on pie plot now in projects */
+
+#projects-pie-plot {
   max-width: 20em;
   margin-block: 2em;
-
+  margin-right: 20px;
   overflow: visible;
 }
 
 .container {
   display: flex;
-  flex: 1;
-  align-items: center;
-  gap: 50px;
-  margin-top: 20px;
+  gap: 20px;
 }
 
 .legend {
-  list-style: none;
-  border: 1px solid rgb(198, 188, 188);
+  list-style-type: none;
   padding: 0;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  justify-content: center;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(7em, 1fr));  /* Auto-fill columns with a minimum width of 9em */
+  gap: 5px;  /* Space between items */
+  flex: 1;
+
 }
 
 .legend li {
   display: flex;
   align-items: center;
-  gap: 5px;
+  margin-bottom: 3px; /* Space between legend items */
+
 }
 
 .legend .swatch {
-  width: 10px;
-  height: 10px;
-  display: inline-block;
-  background-color: var(--color);
-  border-radius: 50%;
+  width: 20px; /* Size of the swatch square */
+  height: 20px; /* Size of the swatch square */
+  aspect-ratio: 1 / 1; /* Ensure the swatch is a square */
+  background-color: var(--color); /* Use the --color variable for the color */
+  margin-right: 10px; /* Space between swatch and label */
+  border-radius: 5px; /* Optional: add some rounded corners */
+}
+
+
+/* The search bar itself */
+.searchBar {
+  display: flex;
+  width: 100%;
+  flex-grow: 1; /* Makes the search bar grow to fill available space */
+  padding: 10px; /* Adds padding inside the search bar */
+  border: 1px solid #ccc; /* Adds a border */
+  border-radius: 4px; /* Optional: adds rounded corners */
+  font-size: 16px; /* Adjust font size */
+  outline: none; /* Removes outline */
 }
 
 &:has(path:hover) {
@@ -247,45 +246,78 @@ a:hover {
 
 path {
   transition: 300ms;
-}
-
-.selected {
-  --color: oklch(37.23% 0.0123 351.53) !important;
-
-  &:is(path) {
-    fill: var(--color);
-  }
-}
-
-path {
   cursor: pointer;
 }
 
-/* Search Container */
-.search-container {
-  margin: 3rem 0;
-  display: flex;
-  gap: 0.5rem;
-  max-width: 400px;
+.selected {
+  --color: oklch(60% 45% 0) !important;
+    fill: var(--color-accent);
 }
 
-/* Search Input */
-.searchBar {
-  flex: 1;
-  padding: 0.75rem 1rem;
-  border: 2px solid #e2e8f0;
-  border-radius: 0.5rem;
-  font-size: 1rem;
-  transition: all 0.2s ease-in-out;
-  outline: none;
-  background-color: white;
+circle {
+  transition: 200ms;
+  transform-origin: center;
+  transform-box: fill-box;
 }
 
-.searchBar:focus {
-  border-color: #4f46e5;
-  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+circle:hover {
+  transform: scale(1.5);
 }
 
-.searchBar:hover {
-  border-color: #cbd5e1;
+
+
+/* Tooltip Styling */
+dl.info {
+  display: grid;
+  grid-template-columns: 0.5fr 0.8fr; /* Labels on the left, values on the right */
+  margin: 0;
+  padding: 0.5em;
+  background-color: rgba(255, 255, 255, 0.5); /* Semi-transparent background */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  color: rgb(47, 47, 47);
+  border-radius: 5px;
 }
+
+dl.info dt {
+  font-weight: bold;
+  margin-bottom: 0.2em;
+}
+
+
+dl.info dd {
+  margin: 0 0 0em 0;
+  transition-duration: 500ms;
+  transition-property: opacity, visibility;
+}
+
+/* Tooltip position */
+.tooltip {
+  position: fixed;
+  top: 1em;
+  left: 1em;
+  pointer-events: none; /* Prevent the tooltip from blocking interactions */
+}
+
+dl.info[hidden]:not(:hover, :focus-within) {
+  opacity: 0;
+  visibility: hidden;
+}
+
+@keyframes marching-ants {
+  to {
+    stroke-dashoffset: -8; /* 5 + 3 */
+  }
+}
+
+.selection {
+  fill-opacity: 0.1;
+  stroke: black;
+  stroke-opacity: 0.7;
+  stroke-dasharray: 5 3;
+  animation: marching-ants 2s linear infinite;
+}
+
+circle.selected {
+  fill: #ff6b6b;
+}
+

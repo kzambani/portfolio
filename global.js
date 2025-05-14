@@ -1,188 +1,125 @@
-console.log('IT’S ALIVE!');
+// Checking that it's alive
+console.log('IT’S ALIVE!!');
 
-function $$ (selector, context = document) {
+function $$(selector, context = document) {
   return Array.from(context.querySelectorAll(selector));
 }
 
+// Remove in the future portfolio/ for live server
 let pages = [
-  { url: '', title: 'Home' },
-  { url: 'projects/', title: 'Projects' },
-  { url: 'contact/', title: 'Contact' },
-  { url: 'https://github.com/kzambani', title: 'GitHub' },
-  { url: 'resume/', title: 'Resume' },
-  { url: 'meta/', title: 'Meta' }
-];
+    { url: 'portfolio/', title: 'Home' },
+    { url: 'portfolio/projects/', title: 'Projects' },
+    { url: 'portfolio/contact/', title: 'Contact'},
+    { url: 'portfolio/resume/', title: 'Resume'},
+    { url: 'https://github.com/ivc003', title: 'Profile'},
+    { url: 'portfolio/meta/', title: 'Meta'}
+  ];
 
-const ARE_WE_HOME = document.documentElement.classList.contains('home');
 
 let nav = document.createElement('nav');
+nav.classList.add('menu');
 document.body.prepend(nav);
 
 for (let p of pages) {
-  let url = p.url;
-  let title = p.title;
-  
-  url = !ARE_WE_HOME && !url.startsWith('http') ? '../' + url : url;
-  
-  let a = document.createElement('a');
-  a.href = url;
-  a.textContent = title;
-  
-  a.classList.toggle(
-    'current',
-    a.host === location.host && a.pathname === location.pathname
-  );
-  
-  if (a.host !== location.host) {
-    a.target = "_blank";
-  }
-  
-  nav.append(a);
-}
+    let url = p.url;
+    let title = p.title;
+    const ARE_WE_HOME = document.documentElement.classList.contains('home');
 
-// DARK-LIGHT MODE
+    if (!url.startsWith('http')) {
+        url = '../../' + url;
+      }
+
+    let a = document.createElement('a');
+    a.href = url;
+    a.textContent = title;
+
+    if (a.host === location.host && a.pathname === location.pathname) {
+        a.classList.add('current');
+      }
+
+      if (a.host !== location.host && a.pathname === location.pathname) {
+        a.target.add('_blank');
+      }
+
+    nav.append(a);
+  }
 
 document.body.insertAdjacentHTML(
-  'afterbegin',
-  `
-  <label class="prefers-color-scheme">
-    Theme:
-    <select>
-      <option value="auto">Automatic</option>
-      <option value="light">Light</option>
-      <option value="dark">Dark</option>
-    </select>
-  </label>`
-);
+    'afterbegin',
+    `
+        <label class="color-scheme">
+            Theme:
+            <select id="theme-selector">
+                <option value="auto">Automatic</option>
+                <option value="light">Light</option>
+                <option value="dark">Dark</option>
+            </select>
+        </label>`
+    );
 
-const select = document.querySelector('.prefers-color-scheme select');
-const root = document.documentElement;
+const select = document.querySelector('#theme-selector');
+const savedColorScheme = localStorage.getItem('colorScheme');
+console.log('Current color scheme:', savedColorScheme);
 
-// load saved preference
-const savedTheme = localStorage.getItem('theme') || 'auto';
-select.value = savedTheme;
-
-// function to apply theme
-function applyTheme(theme) {
-  root.classList.remove('light', 'dark');
-  
-  switch(theme) {
-    case 'light':
-      root.style.colorScheme = 'light';
-      document.body.style.backgroundColor = '#f4f4f4';
-      document.body.style.color = '#333';
-      break;
-    case 'dark':
-      root.style.colorScheme = 'dark';
-      document.body.style.backgroundColor = '#121212';
-      document.body.style.color = '#e0e0e0';
-      break;
-    default:
-      root.style.colorScheme = 'light dark';
-      // reset to default
-      document.body.style.backgroundColor = '';
-      document.body.style.color = '';
+if (savedColorScheme) {
+    // If a saved color scheme exists
+    document.documentElement.style.setProperty('color-scheme', savedColorScheme);
+    select.value = 'auto'; // Set the dropdown to match the saved value
+  } else {
+    // If no saved color scheme, set it to 'auto'
+    select.value = 'auto';
   }
-  
-  localStorage.setItem('theme', theme);
-}
 
-// initial theme application
-applyTheme(savedTheme);
+select.addEventListener('input', function (event) {
+    document.documentElement.style.setProperty('color-scheme', event.target.value);
+    localStorage.setItem('colorScheme', event.target.value);
 
-// event listener for theme changes
-select.addEventListener('input', (event) => {
-  applyTheme(event.target.value);
+    console.log('New color scheme:', event.target.value);
 });
-
-// CONTACT FORM FIX
-
-document.addEventListener('DOMContentLoaded', function () {
-  const form = document.querySelector('form');
-  
-  form?.addEventListener('submit', function (event) {
-    event.preventDefault();  // stop default form submission
-
-    const formData = new FormData(form);
-    let queryString = '';
-
-    for (let [name, value] of formData) {
-      if (queryString !== '') {
-        queryString += '&';
-      }
-      queryString += `${encodeURIComponent(name)}=${encodeURIComponent(value)}`;
-    }
-
-    // construct the mailto link with encoded values
-    const mailtoLink = `${form.action}?${queryString}`;
-    window.location.href = mailtoLink;
-  });
-});
-
-// IMPORTING JSON INFO INTO PROJECTS PAGE
 
 export async function fetchJSON(url) {
   try {
-      // fetch the JSON file from the given URL
+      // Fetch the JSON file from the given URL
       const response = await fetch(url);
-      console.log(response);
-      
       if (!response.ok) {
         throw new Error(`Failed to fetch projects: ${response.statusText}`);
     }
-
+    console.log(response)
     const data = await response.json();
-    return data; 
+    return data;
+
 
   } catch (error) {
       console.error('Error fetching or parsing JSON data:', error);
   }
 }
 
-export function renderProjects(projects, containerElement, headingLevel = 'h2') {
-  // not DOM element
-  if (!containerElement || !(containerElement instanceof Element)) {
-    console.error('Invalid container element:', containerElement);
-    return; // stop the function if container is invalid
-    }
-  // validate headings
-  const validHeadings = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'];
-  if (!validHeadings.includes(headingLevel)) {
-      console.warn(`Invalid heading level "${headingLevel}". Defaulting to "h2".`);
-      headingLevel = 'h2';
-    }
-
+export function renderProjects(project, containerElement, headingLevel = 'h2') {
   containerElement.innerHTML = '';
-  
-  // create element for each project
-  projects.forEach(project => {
-    const article = document.createElement('article');
-    article.innerHTML = `
-        <${headingLevel}>${project.title}</${headingLevel}>
-        <img src="${project.image}" alt="${project.title}">
-        <p>${project.description} (${project.year})</p>
-    `;
-    containerElement.appendChild(article);
-  });
 
-  // update project count
-  const projectCount = projects.length;
-  const projectTitle = document.querySelector('.projects-title');
-  if (projectTitle) {
-      projectTitle.textContent = `${projectCount} Projects`;
+  for (let p in project) {
+    const article = document.createElement('article');
+
+    const item = project[p];
+
+    const linkHTML = item.link
+      ? `<p><a href="${item.link}" target="_blank" rel="noopener noreferrer">🔗 View Project</a></p>`
+      : '';
+
+    article.innerHTML = `
+      <${headingLevel}>${item.title}</${headingLevel}>
+      <img src="${item.image}" alt="${item.title}">
+      <div>
+        ${item.description}<br>
+        <p>(C. ${item.year})</p>
+        ${linkHTML}
+      </div>
+    `;
+
+    containerElement.appendChild(article);
   }
 }
-
-// FETCHING FROM GITHUB
 
 export async function fetchGitHubData(username) {
   return fetchJSON(`https://api.github.com/users/${username}`);
 }
-
-
-
-
-
-
-
-

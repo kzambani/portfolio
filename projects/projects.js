@@ -3,113 +3,136 @@ import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7.9.0/+esm";
 
 const projects = await fetchJSON('../lib/projects.json');
 const projectsContainer = document.querySelector('.projects');
-console.log("Projects container found:", projectsContainer);
 
 renderProjects(projects, projectsContainer, 'h2');
 
-// PROJECT SEARCH AND VISUAL
+function updateProjectCount() {
+    console.log('it worked?')
+    // Select the <h1> element with class 'projects-title'
+    const titleElement = document.querySelector('.projects-title');
+    
+    // Select all the <li> elements within the #projects-list
+    const projects = document.querySelectorAll('article');
+    
+    // Update the text content of the title element with the project count
+    titleElement.textContent = `${projects.length} Projects`;
+}
 
-let query = '';
+// Call the function when the page loads
+updateProjectCount();
 
-let searchInput = document.querySelector('.searchBar');
 
-searchInput.addEventListener('change', (event) => {
-  let filteredProjects = setQuery(event.target.value);
-  // re-render projects when event triggers
-  renderProjects(filteredProjects, projectsContainer, 'h2');
-  renderPieChart(filteredProjects);
-});
-
+// Variable to track the selected index of the pie chart slice
 let selectedIndex = -1;
 
+// Select the SVG element where the pie chart will be rendered
+let svg = d3.select('svg');
+
+// Function to render the pie chart
 function renderPieChart(projectsGiven) {
-  // re-calculate rolled data
-  let newRolledData = d3.rollups(
+  // Clear previous SVG content (remove old pie chart slices)
+  svg.selectAll('path').remove(); 
+  
+  // Re-calculate rolled data (group projects by year)
+  let rolledData = d3.rollups(
     projectsGiven,
     (v) => v.length,
     (d) => d.year
   );
 
-  // re-calculate data
-  let newData = newRolledData.map(([year, count]) => {
+  // Re-calculate data for the pie chart
+  let data = rolledData.map(([year, count]) => {
     return { value: count, label: year };
   });
 
-  // clear previous SVG and legend before re-rendering
-  d3.select("#projects-plot").selectAll("*").remove();
-  d3.select(".legend").html("");
+  // Slice generator for the pie chart
+  let sliceGenerator = d3.pie().value((d) => d.value);
+  let arcData = sliceGenerator(data);
 
-  // define SVG properties
-  let width = 200, height = 200, radius = 50;
+  // Arc generator for drawing the slices
+  let arcGenerator = d3.arc().innerRadius(0).outerRadius(50);
+
+  // Color scale for the chart slices
   let colors = d3.scaleOrdinal(d3.schemeTableau10);
 
-  let svg = d3.select("#projects-plot").attr("viewBox", "-50 -50 100 100");
-
-  // generate arcs
-  let arcGenerator = d3.arc().innerRadius(0).outerRadius(radius);
-  let sliceGenerator = d3.pie().value((d) => d.value);
-  let arcData = sliceGenerator(newData);
-
-  // append new pie chart slices
-  svg.selectAll("path")
-    .data(arcData)
-    .enter()
-    .append("path")
-    .attr("d", arcGenerator)
-    .attr("fill", (d, i) => colors(i))
-    .style("cursor", "pointer") // Indicate clickable slices
-    .on("click", function(event, d) {
-        const i = arcData.indexOf(d);
+  // Render the arcs (pie slices)
+  arcData.forEach((arc, i) => {
+    svg.append('path')
+      .attr('d', arcGenerator(arc))
+      .attr('fill', colors(i)) // Use the color scale for filling
+      .on('click', () => {
+        // Toggle selection (deselect if clicked again)
         selectedIndex = selectedIndex === i ? -1 : i;
-        
-        // update pie slice highlighting
-        svg.selectAll("path")
-          .attr("class", (d, idx) => idx === selectedIndex ? "selected" : "");
-        
-        // update legend highlighting
-        d3.select(".legend")
-          .selectAll("li")
-          .attr("class", (d, idx) => idx === selectedIndex ? "selected" : "");
-        
-        // filter projects based on selected year
+
+        // Update pie slices with the 'selected' class for the selected index
+        svg.selectAll('path')
+          .attr('class', (_, idx) => (idx === selectedIndex ? 'selected' : ''));
+
+        // Update legend items with the 'selected' class
+        d3.select('.legend').selectAll('li')
+          .attr('class', (_, idx) => (idx === selectedIndex ? 'selected' : ''));
+
+        // Filter projects and re-render them based on selected year
         if (selectedIndex === -1) {
-            renderProjects(projectsGiven, projectsContainer, 'h2');
+          renderProjects(projects, projectsContainer, 'h2'); // Show all projects
         } else {
-            const selectedYear = newData[selectedIndex].label;
-            const filteredProjects = projectsGiven.filter(project => project.year === selectedYear);
-            renderProjects(filteredProjects, projectsContainer, 'h2');
+          // Filter projects by year (based on selected pie slice)
+          let selectedYear = data[selectedIndex].label;
+          let filteredProjects = projects.filter(project => project.year === selectedYear);
+          renderProjects(filteredProjects, projectsContainer, 'h2');
         }
       });
+  });
 
-  // update legend dynamically
-  let legend = d3.select(".legend");
-  newData.forEach((d, idx) => {
-    legend.append("li")
-      .attr("style", `--color:${colors(idx)}`)
+  // Render the legend
+  let legend = d3.select('.legend');
+  legend.selectAll('li').remove();  // Clear previous legend items
+  data.forEach((d, i) => {
+    legend.append('li')
+      .attr('style', `--color:${colors(i)}`)
       .html(`<span class="swatch"></span> ${d.label} <em>(${d.value})</em>`)
-      .style("cursor", "pointer") // Indicate clickable legend items
-      .on("click", () => {
-        selectedIndex = selectedIndex === idx ? -1 : idx;
+      .on('click', () => {
+        // Toggle selection on legend item click
+        selectedIndex = selectedIndex === i ? -1 : i;
 
-        svg.selectAll("path").attr("class", (_, i) => 
-          selectedIndex === i ? "selected" : ""
-        );
+        // Update the pie chart slices with the 'selected' class
+        svg.selectAll('path')
+          .attr('class', (_, idx) => (idx === selectedIndex ? 'selected' : ''));
 
-        legend.selectAll("li").attr("class", (_, i) => 
-          selectedIndex === i ? "selected" : ""
-        );
+        // Update the legend items with the 'selected' class
+        legend.selectAll('li')
+          .attr('class', (_, idx) => (idx === selectedIndex ? 'selected' : ''));
+
+        // Filter projects and re-render them based on selected year
+        if (selectedIndex === -1) {
+          renderProjects(projects, projectsContainer, 'h2'); // Show all projects
+        } else {
+          // Filter projects by year (based on selected legend item)
+          let selectedYear = data[selectedIndex].label;
+          let filteredProjects = projects.filter(project => project.year === selectedYear);
+          renderProjects(filteredProjects, projectsContainer, 'h2');
+        }
       });
   });
 }
 
-// Function to filter projects based on search input
-function setQuery(inputValue) {
-  query = inputValue.toLowerCase();
-  return projects.filter(project => {
-    let values = Object.values(project).join(' ').toLowerCase();
-    return values.includes(query)
-  });
-}
-
-// call on page load
+// Call this function to render the initial pie chart and legend
 renderPieChart(projects);
+
+// Add event listener for search input (use `input` for real-time search)
+let searchInput = document.querySelector('.searchBar');
+searchInput.addEventListener('input', (event) => {
+  // Get the search query from the input
+  let query = event.target.value;
+
+  // Filter projects based on the query
+  let filteredProjects = projects.filter((project) => {
+    let values = Object.values(project).join('\n').toLowerCase();
+    return values.includes(query.toLowerCase());
+  });
+
+  renderProjects(filteredProjects, projectsContainer, 'h2');
+  renderPieChart(filteredProjects); // Update the pie chart based on filtered projects
+});
+
+
