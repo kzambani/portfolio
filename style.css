@@ -19,6 +19,13 @@ body {
     font-family: var(--font-family);
   }
 
+.profile-photo {
+  width: 250px;
+  height: 200px;
+  object-fit: cover; /* optional: keeps it tidy if the aspect ratio is different */
+  border-radius: 10px; /* optional: gives it a nice rounded edge */
+}
+
 .menu {
   text-align: center;
   justify-content: center;
