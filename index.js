@@ -18,22 +18,19 @@ async function fetchJSON(url) {
   }
   
   function renderProjects(project, containerElement, headingLevel = 'h2') {
-  containerElement.innerHTML = '';
+    containerElement.innerHTML = '';
 
-  for (let p in project) {
-    const article = document.createElement('article');
+    for (let p in project) {
+      const article = document.createElement('article');
+      article.innerHTML = `
+      <h2>${project[p].title}</h2>
+      <img src="${project[p].image}" alt="${project[p].title}"></img>
+      <p>(${project[p].year}) ${project[p].description}</p>
+      `;
 
-    const { title, image, year, description, url } = project[p];
+      containerElement.appendChild(article);
+    }
 
-    article.innerHTML = `
-      <${headingLevel}>${title}</${headingLevel}>
-      <img src="${image}" alt="${title}">
-      <p>(C. ${year}) ${description}</p>
-      ${url ? `<p><a href="${url}" target="_blank" rel="noopener noreferrer">View Project</a></p>` : ''}
-    `;
-
-    containerElement.appendChild(article);
-  }
 }
 
   
