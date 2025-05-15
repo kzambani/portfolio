@@ -10,7 +10,6 @@ let pages = [
     { url: 'portfolio/', title: 'Home' },
     { url: 'portfolio/projects/', title: 'Projects' },
     { url: 'portfolio/contact/', title: 'Contact'},
-    { url: 'portfolio/resume/', title: 'Resume'},
     { url: 'https://github.com/kzambani?tab=repositories', title: 'Github'},
     { url: 'portfolio/meta/', title: 'Meta'}
   ];
